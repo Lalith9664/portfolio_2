@@ -5,17 +5,17 @@ export default function CursorGlow() {
   const mouseX = useMotionValue(-100);
   const mouseY = useMotionValue(-100);
   
-  // Spring with slight lag for the outer neomorphic ring (increased speed)
-  const ringX = useSpring(mouseX, { damping: 28, stiffness: 280, mass: 0.45 });
-  const ringY = useSpring(mouseY, { damping: 28, stiffness: 280, mass: 0.45 });
+  // Spring with slight lag for the outer neomorphic ring (increased responsiveness)
+  const ringX = useSpring(mouseX, { damping: 22, stiffness: 450, mass: 0.25 });
+  const ringY = useSpring(mouseY, { damping: 22, stiffness: 450, mass: 0.25 });
   
-  // High-stiffness spring for the center active dot (increased speed)
-  const dotX = useSpring(mouseX, { damping: 40, stiffness: 500 });
-  const dotY = useSpring(mouseY, { damping: 40, stiffness: 500 });
+  // High-stiffness spring for the center active dot (near-instant follow)
+  const dotX = useSpring(mouseX, { damping: 30, stiffness: 850, mass: 0.15 });
+  const dotY = useSpring(mouseY, { damping: 30, stiffness: 850, mass: 0.15 });
 
-  // Sluggish drifting spring for the ambient spotlight background glow (increased speed)
-  const ambientX = useSpring(mouseX, { damping: 48, stiffness: 130, mass: 0.95 });
-  const ambientY = useSpring(mouseY, { damping: 48, stiffness: 130, mass: 0.95 });
+  // Sluggish drifting spring for the ambient spotlight background glow (smooth drift)
+  const ambientX = useSpring(mouseX, { damping: 36, stiffness: 220, mass: 0.5 });
+  const ambientY = useSpring(mouseY, { damping: 36, stiffness: 220, mass: 0.5 });
 
   const [isHovered, setIsHovered] = useState(false);
   const [isClicking, setIsClicking] = useState(false);

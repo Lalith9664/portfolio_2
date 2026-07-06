@@ -44,18 +44,26 @@ export default function Contact() {
     if (!validate()) return;
 
     setIsSending(true);
-    // Simulate sending email
+
+    const recipient = "lalith8302@gmail.com";
+    const emailSubject = `[Portfolio Contact] ${formData.subject}`;
+    const emailBody = `Name: ${formData.name}\nEmail: ${formData.email}\n\nMessage:\n${formData.message}`;
+
+    const gmailUrl = `https://mail.google.com/mail/?view=cm&fs=1&to=${recipient}&su=${encodeURIComponent(emailSubject)}&body=${encodeURIComponent(emailBody)}`;
+
+    // Simulate sending delay, open Gmail compose tab, and reset form
     setTimeout(() => {
       setIsSending(false);
       setIsSubmitted(true);
+      window.open(gmailUrl, '_blank');
       setFormData({ name: '', email: '', subject: '', message: '' });
       // Reset success notification after 5s
       setTimeout(() => setIsSubmitted(false), 5000);
-    }, 2000);
+    }, 1000);
   };
 
   return (
-    <section id="contact" className="py-24 relative overflow-hidden bg-bg-base">
+    <section id="contact" className="py-24 relative overflow-hidden">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         
         {/* Section Header */}
@@ -77,7 +85,7 @@ export default function Contact() {
             
             {/* Contact details list */}
             {[
-              { icon: <Mail className="text-indigo-400" size={18} />, label: "Email", val: "lalith8302@gmail.com", href: "mailto:lalith8302@gmail.com" },
+              { icon: <Mail className="text-indigo-400" size={18} />, label: "Email", val: "lalith8302@gmail.com", href: "https://mail.google.com/mail/?view=cm&fs=1&to=lalith8302@gmail.com&su=Collaboration%20Inquiry%20%7C%20Portfolio%20Visitor&body=Hi%20Lalith%2C%0A%0AI%20visited%20your%20portfolio%20website%20and%20was%20impressed%20by%20your%20work%20in%20AI%2C%20Machine%20Learning%2C%20and%20Full%20Stack%20Development.%20I%20am%20reaching%20out%20to%20discuss%20potential%20collaboration%20%2F%20career%20opportunities.%0A%0AA%20bit%20about%20myself%20%2F%20the%20project%3A%0A-%20Name%3A%20%5BYour%20Name%5D%0A-%20Company%20%2F%20Organization%3A%20%5BYour%20Organization%5D%0A-%20Nature%20of%20Inquiry%3A%20%5Be.g.%2C%20Job%20Opportunity%20%2F%20Freelance%20Project%20%2F%20Tech%20Discussion%5D%0A%0ALet's%20connect%20soon!%0A%0ABest%20regards%2C" },
               { icon: <Phone className="text-purple-400" size={18} />, label: "Phone", val: "+91 87787 67644", href: "tel:+918778767644" },
               { icon: <MapPin className="text-teal-400" size={18} />, label: "Location", val: "Coimbatore, Tamil Nadu, India", href: "#" }
             ].map((det, idx) => (
@@ -93,7 +101,12 @@ export default function Contact() {
                     {det.label}
                   </h4>
                   {det.href !== '#' ? (
-                    <a href={det.href} className="text-xs font-semibold text-white hover:text-indigo-400 transition-colors font-mono">
+                    <a 
+                      href={det.href} 
+                      target="_blank" 
+                      rel="noopener noreferrer" 
+                      className="text-xs font-semibold text-white hover:text-indigo-400 transition-colors font-mono"
+                    >
                       {det.val}
                     </a>
                   ) : (

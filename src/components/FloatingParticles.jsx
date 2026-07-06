@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef } from "react";
 
 export default function FloatingParticles() {
   const canvasRef = useRef(null);
@@ -7,17 +7,17 @@ export default function FloatingParticles() {
     const canvas = canvasRef.current;
     if (!canvas) return;
 
-    const ctx = canvas.getContext('2d');
+    const ctx = canvas.getContext("2d");
     if (!ctx) return;
 
     let animationFrameId;
     let particlesArray = [];
-    
+
     // Mouse coordinates ref to avoid react state updates in animation loop
     const mouse = {
       x: null,
       y: null,
-      radius: 120 // Interaction radius
+      radius: 120, // Interaction radius
     };
 
     const resizeCanvas = () => {
@@ -35,10 +35,10 @@ export default function FloatingParticles() {
       mouse.y = null;
     };
 
-    window.addEventListener('resize', resizeCanvas);
-    window.addEventListener('mousemove', handleMouseMove);
-    document.addEventListener('mouseleave', handleMouseLeave);
-    
+    window.addEventListener("resize", resizeCanvas);
+    window.addEventListener("mousemove", handleMouseMove);
+    document.addEventListener("mouseleave", handleMouseLeave);
+
     resizeCanvas();
 
     // Particle class
@@ -63,22 +63,22 @@ export default function FloatingParticles() {
           const dx = this.x - mouse.x;
           const dy = this.y - mouse.y;
           const distance = Math.hypot(dx, dy);
-          
+
           if (distance < mouse.radius) {
             // Calculate force direction
             const forceDirectionX = dx / distance;
             const forceDirectionY = dy / distance;
-            
+
             // Stronger push the closer the mouse is
             const force = (mouse.radius - distance) / mouse.radius;
             const push = force * 1.2;
-            
+
             this.x += forceDirectionX * push;
             this.y += forceDirectionY * push;
-            
+
             // Slightly decelerate back to normal speed
-            this.speedX = this.baseSpeedX + (forceDirectionX * push * 0.1);
-            this.speedY = this.baseSpeedY + (forceDirectionY * push * 0.1);
+            this.speedX = this.baseSpeedX + forceDirectionX * push * 0.1;
+            this.speedY = this.baseSpeedY + forceDirectionY * push * 0.1;
           } else {
             // Return to normal speed slowly
             this.speedX += (this.baseSpeedX - this.speedX) * 0.05;
@@ -98,10 +98,10 @@ export default function FloatingParticles() {
       }
 
       draw(isLightMode) {
-        ctx.fillStyle = isLightMode 
-          ? `rgba(13, 148, 136, ${this.size * 0.15 + 0.15})`  // Faint teal
+        ctx.fillStyle = isLightMode
+          ? `rgba(13, 148, 136, ${this.size * 0.15 + 0.15})` // Faint teal
           : `rgba(16, 185, 129, ${this.size * 0.12 + 0.08})`; // Faint emerald
-        
+
         ctx.beginPath();
         ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
         ctx.fill();
@@ -111,7 +111,10 @@ export default function FloatingParticles() {
     // Initialize particles
     const init = () => {
       // Density based on window resolution
-      const numberOfParticles = Math.min(Math.floor((canvas.width * canvas.height) / 12000), 120);
+      const numberOfParticles = Math.min(
+        Math.floor((canvas.width * canvas.height) / 12000),
+        120,
+      );
       particlesArray = [];
       for (let i = 0; i < numberOfParticles; i++) {
         particlesArray.push(new Particle());
@@ -123,24 +126,24 @@ export default function FloatingParticles() {
     // Animation loop
     const animate = () => {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
-      
-      const isLightMode = document.documentElement.classList.contains('light');
+
+      const isLightMode = document.documentElement.classList.contains("light");
 
       // Draw and update particles
       for (let i = 0; i < particlesArray.length; i++) {
         particlesArray[i].update(isLightMode);
         particlesArray[i].draw(isLightMode);
-        
+
         // Draw lines between close particles
         for (let j = i + 1; j < particlesArray.length; j++) {
           const dx = particlesArray[i].x - particlesArray[j].x;
           const dy = particlesArray[i].y - particlesArray[j].y;
           const distance = Math.hypot(dx, dy);
-          
+
           if (distance < 110) {
             const opacityMultiplier = isLightMode ? 0.09 : 0.055;
             ctx.beginPath();
-            ctx.strokeStyle = isLightMode 
+            ctx.strokeStyle = isLightMode
               ? `rgba(13, 148, 136, ${(1 - distance / 110) * opacityMultiplier})`
               : `rgba(20, 184, 166, ${(1 - distance / 110) * opacityMultiplier})`;
             ctx.lineWidth = 0.6;
@@ -150,16 +153,16 @@ export default function FloatingParticles() {
           }
         }
       }
-      
+
       animationFrameId = requestAnimationFrame(animate);
     };
 
     animate();
 
     return () => {
-      window.removeEventListener('resize', resizeCanvas);
-      window.removeEventListener('mousemove', handleMouseMove);
-      document.removeEventListener('mouseleave', handleMouseLeave);
+      window.removeEventListener("resize", resizeCanvas);
+      window.removeEventListener("mousemove", handleMouseMove);
+      document.removeEventListener("mouseleave", handleMouseLeave);
       cancelAnimationFrame(animationFrameId);
     };
   }, []);

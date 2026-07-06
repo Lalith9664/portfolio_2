@@ -26,7 +26,7 @@ const CONNECTIONS = [
 
 export default function TechStack() {
   return (
-    <section id="tech-stack" className="py-24 relative overflow-hidden bg-bg-base">
+    <section id="tech-stack" className="py-24 relative overflow-hidden">
       {/* Decorative blurred blobs */}
       <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-teal-500/5 rounded-full blur-[120px] pointer-events-none" />
 

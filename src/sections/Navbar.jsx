@@ -316,6 +316,19 @@ export default function Navbar({ activeSection, theme, toggleTheme }) {
                 : 'bg-teal-400 shadow-[0_0_8px_rgba(20,184,166,0.9)]'
             }`}
           />
+
+          {/* Menu Text Inside the Knob (with counter-rotation to keep it upright) */}
+          <div className="absolute inset-0 flex items-end justify-center pb-4 z-10">
+            <motion.span
+              animate={{ rotate: -targetAngle }}
+              transition={{ type: 'spring', stiffness: 180, damping: 15 }}
+              className={`text-[9px] font-black font-display tracking-widest uppercase transition-colors duration-300 ${
+                theme === 'light' ? 'text-slate-600' : 'text-slate-350'
+              }`}
+            >
+              Menu
+            </motion.span>
+          </div>
         </motion.div>
 
         {/* Toggle Expand Handle Arrow (Moved to top center) */}

@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useActiveSection } from './hooks/useActiveSection';
+import Lenis from 'lenis';
 
 // Shared Components
 import CustomLoader from './components/CustomLoader';
@@ -43,6 +44,29 @@ export default function App() {
 
     return () => clearTimeout(timer);
   }, []);
+
+  useEffect(() => {
+    if (!isFinishedLoading) return;
+
+    const lenis = new Lenis({
+      duration: 1.2,
+      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+      orientation: 'vertical',
+      gestureOrientation: 'vertical',
+      smoothWheel: true,
+    });
+
+    function raf(time) {
+      lenis.raf(time);
+      requestAnimationFrame(raf);
+    }
+
+    requestAnimationFrame(raf);
+
+    return () => {
+      lenis.destroy();
+    };
+  }, [isFinishedLoading]);
 
   useEffect(() => {
     const root = document.documentElement;

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Mail, Phone, MapPin, Send, CheckCircle2, AlertCircle } from 'lucide-react';
+import { Mail, Phone, Send, CheckCircle2, AlertCircle } from 'lucide-react';
 
 export default function Contact() {
   const [formData, setFormData] = useState({ name: '', email: '', subject: '', message: '' });
@@ -39,27 +39,51 @@ export default function Contact() {
     }
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     if (!validate()) return;
 
     setIsSending(true);
 
-    const recipient = "lalith8302@gmail.com";
-    const emailSubject = `[Portfolio Contact] ${formData.subject}`;
-    const emailBody = `Name: ${formData.name}\nEmail: ${formData.email}\n\nMessage:\n${formData.message}`;
-
-    const gmailUrl = `https://mail.google.com/mail/?view=cm&fs=1&to=${recipient}&su=${encodeURIComponent(emailSubject)}&body=${encodeURIComponent(emailBody)}`;
-
-    // Simulate sending delay, open Gmail compose tab, and reset form
-    setTimeout(() => {
+    const accessKey = import.meta.env.VITE_WEB3FORMS_ACCESS_KEY;
+    if (!accessKey || accessKey.includes("YOUR_KEY_HERE")) {
+      alert("Please configure your Web3Forms Access Key in the .env file at the project root.");
       setIsSending(false);
-      setIsSubmitted(true);
-      window.open(gmailUrl, '_blank');
-      setFormData({ name: '', email: '', subject: '', message: '' });
-      // Reset success notification after 5s
-      setTimeout(() => setIsSubmitted(false), 5000);
-    }, 1000);
+      return;
+    }
+
+    try {
+      const response = await fetch("https://api.web3forms.com/submit", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "Accept": "application/json"
+        },
+        body: JSON.stringify({
+          access_key: accessKey,
+          name: formData.name,
+          email: formData.email,
+          subject: `[Portfolio Contact] ${formData.subject}`,
+          message: formData.message
+        })
+      });
+
+      const data = await response.json();
+
+      if (response.ok && data.success) {
+        setIsSubmitted(true);
+        setFormData({ name: '', email: '', subject: '', message: '' });
+        // Reset success notification after 5s
+        setTimeout(() => setIsSubmitted(false), 5000);
+      } else {
+        alert(data.message || "Oops! Something went wrong with the form submission. Please try again.");
+      }
+    } catch (error) {
+      console.error("Error submitting contact form:", error);
+      alert("Oops! There was a network error sending your message. Please check your connection and try again.");
+    } finally {
+      setIsSending(false);
+    }
   };
 
   return (
@@ -86,8 +110,7 @@ export default function Contact() {
             {/* Contact details list */}
             {[
               { icon: <Mail className="text-indigo-400" size={18} />, label: "Email", val: "lalith8302@gmail.com", href: "https://mail.google.com/mail/?view=cm&fs=1&to=lalith8302@gmail.com&su=Collaboration%20Inquiry%20%7C%20Portfolio%20Visitor&body=Hi%20Lalith%2C%0A%0AI%20visited%20your%20portfolio%20website%20and%20was%20impressed%20by%20your%20work%20in%20AI%2C%20Machine%20Learning%2C%20and%20Full%20Stack%20Development.%20I%20am%20reaching%20out%20to%20discuss%20potential%20collaboration%20%2F%20career%20opportunities.%0A%0AA%20bit%20about%20myself%20%2F%20the%20project%3A%0A-%20Name%3A%20%5BYour%20Name%5D%0A-%20Company%20%2F%20Organization%3A%20%5BYour%20Organization%5D%0A-%20Nature%20of%20Inquiry%3A%20%5Be.g.%2C%20Job%20Opportunity%20%2F%20Freelance%20Project%20%2F%20Tech%20Discussion%5D%0A%0ALet's%20connect%20soon!%0A%0ABest%20regards%2C" },
-              { icon: <Phone className="text-purple-400" size={18} />, label: "Phone", val: "+91 87787 67644", href: "tel:+918778767644" },
-              { icon: <MapPin className="text-teal-400" size={18} />, label: "Location", val: "Coimbatore, Tamil Nadu, India", href: "#" }
+              { icon: <Phone className="text-purple-400" size={18} />, label: "Phone", val: "+91 87787 67644", href: "tel:+918778767644" }
             ].map((det, idx) => (
               <div
                 key={idx}
@@ -118,25 +141,7 @@ export default function Contact() {
               </div>
             ))}
 
-            {/* Map Placeholder Card */}
-            <div className="p-5 rounded-3xl neo-card border border-white/5 h-64 overflow-hidden relative group">
-              <div className="absolute inset-0 bg-[#0a0f1b] opacity-80 z-0" />
-              {/* Graphic grid backdrop */}
-              <div className="absolute inset-0 bg-[radial-gradient(rgba(99,102,241,0.06)_1px,transparent_1px)] [background-size:16px_16px] z-10" />
-              
-              <div className="absolute inset-0 flex flex-col items-center justify-center text-center p-6 z-20">
-                <div className="w-12 h-12 rounded-full bg-[#0c1322] border border-white/5 shadow-neo-flat flex items-center justify-center mb-3">
-                  <MapPin size={22} className="text-indigo-400 animate-bounce" />
-                </div>
-                <h4 className="font-bold text-white font-display text-sm">Interactive Map Location</h4>
-                <p className="text-[10px] text-slate-400 font-body max-w-[200px] mt-1 leading-relaxed">
-                  Coimbatore Hub, Tamil Nadu, India
-                </p>
-                <span className="mt-4 text-[9px] font-bold tracking-wider uppercase text-indigo-400 bg-indigo-500/10 px-2 py-0.5 rounded border border-indigo-500/20 shadow-neo-inset">
-                  Coordinates: 11.0168° N, 76.9558° E
-                </span>
-              </div>
-            </div>
+
 
           </div>
 

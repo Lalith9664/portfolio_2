@@ -61,6 +61,7 @@ export default function BackgroundBlobs() {
           repeat: Infinity,
           ease: "easeInOut"
         }}
+        style={{ willChange: "transform" }}
         className="absolute top-[5%] left-[5%] w-[350px] md:w-[550px] h-[350px] md:h-[550px] rounded-full bg-[var(--blob-one)] blur-[120px]"
       />
       
@@ -76,6 +77,7 @@ export default function BackgroundBlobs() {
           repeat: Infinity,
           ease: "easeInOut"
         }}
+        style={{ willChange: "transform" }}
         className="absolute top-[30%] right-[3%] w-[400px] md:w-[650px] h-[400px] md:h-[650px] rounded-full bg-[var(--blob-two)] blur-[130px]"
       />
       
@@ -91,6 +93,7 @@ export default function BackgroundBlobs() {
           repeat: Infinity,
           ease: "easeInOut"
         }}
+        style={{ willChange: "transform" }}
         className="absolute bottom-[8%] left-[8%] w-[300px] md:w-[500px] h-[300px] md:h-[500px] rounded-full bg-[var(--blob-three)] blur-[110px]"
       />
 
@@ -106,6 +109,7 @@ export default function BackgroundBlobs() {
           repeat: Infinity,
           ease: "easeInOut"
         }}
+        style={{ willChange: "transform" }}
         className="absolute bottom-[25%] right-[12%] w-[350px] md:w-[550px] h-[350px] md:h-[550px] rounded-full bg-[var(--blob-four)] blur-[125px]"
       />
 

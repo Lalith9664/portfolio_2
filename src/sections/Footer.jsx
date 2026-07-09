@@ -1,4 +1,4 @@
-import { ArrowUp, Mail, Award, Terminal } from 'lucide-react';
+import { ArrowUp, Mail, Award, Terminal, Database } from 'lucide-react';
 import { Github, Linkedin } from '../components/Icons';
 
 export default function Footer() {
@@ -47,16 +47,20 @@ export default function Footer() {
             {/* Social profiles icons */}
             <div className="flex space-x-2">
               {[
-                { icon: <Github size={14} />, url: "https://github.com/Lalith9664" },
-                { icon: <Linkedin size={14} />, url: "https://www.linkedin.com/in/lalith-kumar-2a124b331/" },
-                { icon: <Mail size={14} />, url: "https://mail.google.com/mail/?view=cm&fs=1&to=lalith8302@gmail.com&su=Collaboration%20Inquiry%20%7C%20Portfolio%20Visitor&body=Hi%20Lalith%2C%0A%0AI%20visited%20your%20portfolio%20website%20and%20was%20impressed%20by%20your%20work%20in%20AI%2C%20Machine%20Learning%2C%20and%20Full%20Stack%20Development.%20I%20am%20reaching%20out%20to%20discuss%20potential%20collaboration%20%2F%20career%20opportunities.%0A%0AA%20bit%20about%20myself%20%2F%20the%20project%3A%0A-%20Name%3A%20%5BYour%20Name%5D%0A-%20Company%20%2F%20Organization%3A%20%5BYour%20Organization%5D%0A-%20Nature%20of%20Inquiry%3A%20%5Be.g.%2C%20Job%20Opportunity%20%2F%20Freelance%20Project%20%2F%20Tech%20Discussion%5D%0A%0ALet's%20connect%20soon!%0A%0ABest%20regards%2C" }
+                { icon: <Github size={16} />, label: "GitHub", url: "https://github.com/Lalith9664" },
+                { icon: <Linkedin size={16} />, label: "LinkedIn", url: "https://www.linkedin.com/in/lalith-kumar-2a124b331/" },
+                { icon: <Terminal size={16} />, label: "LeetCode", url: "https://leetcode.com/u/Lalithkumar8302/" },
+                { icon: <Database size={16} />, label: "HackerRank", url: "https://www.hackerrank.com/profile/lalith8302" },
+                { icon: <Mail size={16} />, label: "Email", url: "https://mail.google.com/mail/?view=cm&fs=1&to=lalith8302@gmail.com&su=Collaboration%20Inquiry%20%7C%20Portfolio%20Visitor&body=Hi%20Lalith%2C%0A%0AI%20visited%20your%20portfolio%20website%20and%20was%20impressed%20by%20your%20work%20in%20AI%2C%20Machine%20Learning%2C%20and%20Full%20Stack%20Development.%20I%20am%20reaching%20out%20to%20discuss%20potential%20collaboration%20%2F%20career%20opportunities.%0A%0AA%20bit%20about%20myself%20%2F%20the%20project%3A%0A-%20Name%3A%20%5BYour%20Name%5D%0A-%20Company%20%2F%20Organization%3A%20%5BYour%20Organization%5D%0A-%20Nature%20of%20Inquiry%3A%20%5Be.g.%2C%20Job%20Opportunity%20%2F%20Freelance%20Project%20%2F%20Tech%20Discussion%5D%0A%0ALet's%20connect%20soon!%0A%0ABest%20regards%2C" }
               ].map((soc, i) => (
                 <a
                   key={i}
                   href={soc.url}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="w-8 h-8 rounded-full bg-bg-card border border-white/5 shadow-neo-btn flex items-center justify-center text-slate-400 hover:text-indigo-400 hover:border-indigo-500/20 transition-all"
+                  className="w-9 h-9 rounded-full bg-bg-card border border-white/5 shadow-neo-btn flex items-center justify-center text-slate-400 hover:text-indigo-400 hover:border-indigo-500/20 transition-all"
+                  aria-label={soc.label}
+                  title={soc.label}
                 >
                   {soc.icon}
                 </a>

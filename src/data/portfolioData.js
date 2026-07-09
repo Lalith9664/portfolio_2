@@ -180,16 +180,8 @@ export const educationData = [
     degree: "Bachelor of Technology",
     department: "Computer Science and Engineering",
     cgpa: "8.5 / 10.0",
-    duration: "2022 - 2026",
+    duration: "2024 - 2028 (Expected)",
     coursework: ["Artificial Intelligence", "Deep Learning", "Data Structures & Algorithms", "Database Management Systems", "Object Oriented Programming"]
-  },
-  {
-    college: "Isha Vidhya Infosys Matric Hr. Sec School, Dharmapuri",
-    degree: "Class XII",
-    department: "Physics, Chemistry, Mathematics & CS",
-    cgpa: "84.4%",
-    duration: "2020 - 2022",
-    coursework: ["Mathematics", "Physics", "Computer Science (Python)", "Chemistry"]
   }
 ];
 

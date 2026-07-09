@@ -1,11 +1,17 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { educationData } from '../data/portfolioData';
-import { GraduationCap, Award, BookOpen } from 'lucide-react';
+import { GraduationCap, Award, Calendar } from 'lucide-react';
 
 export default function Education() {
+  const item = educationData[0];
+  if (!item) return null;
+
   return (
     <section id="education" className="py-24 relative overflow-hidden">
+      {/* Decorative blurred background blobs */}
+      <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-indigo-500/5 rounded-full blur-[120px] pointer-events-none" />
+
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         
         {/* Section Header */}
@@ -13,95 +19,93 @@ export default function Education() {
           <h2 className="text-3xl sm:text-4xl font-black font-display tracking-tight text-white">
             My <span className="text-gradient">Education</span>
           </h2>
-          <div className="mt-2 w-12 h-[3px] bg-indigo-500 mx-auto rounded-full" />
+          <div className="mt-2 w-12 h-[3px] bg-indigo-500 mx-auto rounded-full shadow-[0_0_8px_rgba(99,102,241,0.4)]" />
           <p className="mt-4 text-slate-400 max-w-xl mx-auto text-sm sm:text-base font-body">
-            My academic training, grades, and relevant coursework.
+            My current academic path, enrollment status, and institutional focus.
           </p>
         </div>
 
-        {/* Timeline grid */}
-        <div className="relative max-w-3xl mx-auto">
-          {/* Vertical central line */}
-          <div className="absolute left-4 sm:left-1/2 transform sm:-translate-x-1/2 top-2 bottom-2 w-[2px] bg-purple-500/10" />
+        {/* Centered Dashboard Card Layout */}
+        <div className="flex justify-center w-full max-w-xl mx-auto">
+          
+          {/* Academic Card */}
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+            className="w-full p-6 sm:p-8 rounded-3xl neo-card border border-white/5 relative group hover:border-indigo-500/25 transition-all flex flex-col justify-between"
+          >
+            {/* Top glass glow strip */}
+            <div className="absolute top-0 inset-x-8 h-[2px] bg-gradient-to-r from-transparent via-indigo-500/30 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
 
-          {/* Timeline Cards */}
-          <div className="space-y-12">
-            {educationData.map((item, idx) => {
-              const isEven = idx % 2 === 0;
-              return (
-                <motion.div
-                  key={idx}
-                  initial={{ opacity: 0, x: isEven ? -50 : 50 }}
-                  whileInView={{ opacity: 1, x: 0 }}
-                  viewport={{ once: true, margin: "-100px" }}
-                  transition={{ duration: 0.6 }}
-                  className={`relative flex flex-col sm:flex-row items-start ${
-                    isEven ? 'sm:flex-row-reverse' : ''
-                  }`}
-                >
-                  {/* Timeline circle point */}
-                  <div className="absolute left-4 sm:left-1/2 transform -translate-x-1/2 top-6 w-4 h-4 rounded-full bg-[#0c1322] border-2 border-purple-500 shadow-[0_0_10px_rgba(168,85,247,0.5)] z-10" />
+            <div>
+              {/* Card Header & Pulse Status */}
+              <div className="flex items-center justify-between mb-6">
+                <div className="inline-flex items-center space-x-2 px-3 py-1 rounded-full bg-[#0a0f1b] border border-white/5 shadow-neo-inset">
+                  <span className="flex h-1.5 w-1.5 relative">
+                    <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+                    <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-emerald-500"></span>
+                  </span>
+                  <span className="text-[9px] font-extrabold font-display tracking-widest uppercase text-emerald-400">
+                    Currently Enrolled
+                  </span>
+                </div>
+                <div className="w-10 h-10 rounded-full bg-[#0a0f1b] shadow-neo-inset flex items-center justify-center">
+                  <GraduationCap className="text-indigo-400" size={20} />
+                </div>
+              </div>
 
-                  {/* Desktop offset */}
-                  <div className="hidden sm:block w-1/2" />
+              {/* Degree Title */}
+              <h3 className="text-xl sm:text-2xl font-black font-display text-white tracking-wide leading-tight">
+                {item.degree}
+              </h3>
+              <p className="text-xs sm:text-sm font-semibold text-indigo-400 font-display tracking-wide mt-1 uppercase">
+                {item.department}
+              </p>
 
-                  {/* Education Info Box */}
-                  <div className="w-full sm:w-1/2 pl-12 sm:pl-8 sm:pr-8">
-                    <div className="p-6 rounded-2xl neo-card border border-white/5 relative group hover:border-purple-500/20">
-                      {/* Top highlight bar */}
-                      <div className="absolute top-0 inset-x-8 h-[2px] bg-gradient-to-r from-transparent via-purple-500/30 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
-
-                      {/* Header */}
-                      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 mb-3">
-                        <h3 className="font-bold font-display text-white text-base">
-                          {item.degree}
-                        </h3>
-                        <span className="inline-flex text-[10px] font-bold text-purple-400 bg-purple-500/5 px-2 py-0.5 rounded-full border border-purple-500/15">
-                          {item.duration}
-                        </span>
-                      </div>
-
-                      {/* University details */}
-                      <h4 className="text-xs font-semibold text-slate-300 font-display flex items-center mb-1">
-                        <GraduationCap size={12} className="mr-1 text-slate-400" />
-                        {item.college}
-                      </h4>
-                      <p className="text-[10px] font-medium text-slate-400 uppercase tracking-widest font-display mb-4">
-                        {item.department}
-                      </p>
-
-                      {/* Grade display */}
-                      <div className="mb-5 p-3 rounded-xl bg-[#0a0f1b] border border-white/5 shadow-neo-inset flex items-center justify-between">
-                        <span className="text-[10px] font-bold tracking-wider uppercase text-slate-400">Score Achieved:</span>
-                        <span className="text-xs font-mono font-bold text-emerald-400 flex items-center">
-                          <Award size={12} className="mr-1" />
-                          {item.cgpa}
-                        </span>
-                      </div>
-
-                      {/* Coursework Tags */}
-                      <div className="space-y-2">
-                        <span className="text-[9px] font-bold tracking-wider uppercase text-slate-400 flex items-center">
-                          <BookOpen size={10} className="mr-1" />
-                          Coursework Focus:
-                        </span>
-                        <div className="flex flex-wrap gap-1.5">
-                          {item.coursework.map((course, i) => (
-                            <span
-                              key={i}
-                              className="px-2 py-0.5 text-[9px] font-mono font-bold uppercase rounded bg-purple-500/10 text-purple-700 dark:text-purple-300 border border-purple-500/20 dark:border-purple-500/30 transition-colors"
-                            >
-                              {course}
-                            </span>
-                          ))}
-                        </div>
-                      </div>
-                    </div>
+              {/* Institution details */}
+              <div className="mt-6 space-y-3">
+                <div className="flex items-start text-slate-300">
+                  <div className="mt-1 text-slate-400 shrink-0 mr-2">
+                    <GraduationCap size={16} />
                   </div>
-                </motion.div>
-              );
-            })}
-          </div>
+                  <span className="text-xs sm:text-sm font-medium font-body leading-snug">
+                    {item.college}
+                  </span>
+                </div>
+                <div className="flex items-center text-slate-400 text-xs font-mono">
+                  <Calendar size={14} className="mr-2" />
+                  <span>{item.duration}</span>
+                </div>
+              </div>
+            </div>
+
+            {/* Score & Progress Tracker */}
+            <div className="mt-8 pt-6 border-t border-white/5">
+              <div className="flex items-center justify-between mb-2">
+                <span className="text-[10px] font-black tracking-widest uppercase text-slate-400 flex items-center">
+                  <Award size={12} className="mr-1.5 text-emerald-400" />
+                  Current CGPA
+                </span>
+                <span className="text-sm font-mono font-black text-emerald-400">
+                  {item.cgpa}
+                </span>
+              </div>
+              
+              {/* Progress bar representing 8.5/10 (85%) */}
+              <div className="w-full h-2 rounded-full bg-[#0a0f1b] shadow-neo-inset overflow-hidden p-[2px]">
+                <motion.div
+                  initial={{ width: 0 }}
+                  whileInView={{ width: "85%" }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 1, delay: 0.2, ease: "easeOut" }}
+                  className="h-full rounded-full bg-gradient-to-r from-indigo-500 to-emerald-400 shadow-[0_0_8px_rgba(20,184,166,0.3)]"
+                />
+              </div>
+            </div>
+          </motion.div>
+
         </div>
 
       </div>

@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Mail, ArrowRight, Download, Terminal, Database } from "lucide-react";
-import { Github, Linkedin } from "../components/Icons";
+import { ArrowRight, Download } from "lucide-react";
 import { motion } from "framer-motion";
 import { useMousePosition } from "../hooks/useMousePosition";
 
@@ -88,16 +87,7 @@ export default function Hero() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, ease: "easeOut" }}
           >
-            {/* Tag Badge */}
-            <div className="inline-flex items-center space-x-2 px-4 py-2 rounded-full bg-[#0a0f1b] border border-white/5 shadow-neo-inset mb-6">
-              <span className="flex h-2 w-2 relative">
-                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
-                <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
-              </span>
-              <span className="text-xs font-semibold font-display tracking-widest uppercase text-emerald-400">
-                Available for Freelance & Roles
-              </span>
-            </div>
+
 
             {/* Hello Header */}
             <h1 className="text-4xl sm:text-5xl md:text-6xl font-extrabold tracking-tight font-display text-white">
@@ -146,48 +136,7 @@ export default function Hero() {
               </a>
             </div>
 
-            {/* Social Icons Grid */}
-            <div className="mt-12 flex items-center justify-center lg:justify-start space-x-4">
-              {[
-                {
-                  icon: <Github size={20} />,
-                  label: "GitHub",
-                  url: "https://github.com/Lalith9664",
-                },
-                {
-                  icon: <Linkedin size={20} />,
-                  label: "LinkedIn",
-                  url: "https://www.linkedin.com/in/lalith-kumar-2a124b331/",
-                },
-                {
-                  icon: <Terminal size={20} />,
-                  label: "LeetCode",
-                  url: "https://leetcode.com/u/Lalithkumar8302/",
-                },
-                {
-                  icon: <Database size={20} />,
-                  label: "HackerRank",
-                  url: "https://www.hackerrank.com/profile/lalith8302",
-                },
-                {
-                  icon: <Mail size={20} />,
-                  label: "Email",
-                  url: "https://mail.google.com/mail/?view=cm&fs=1&to=lalith8302@gmail.com&su=Collaboration%20Inquiry%20%7C%20Portfolio%20Visitor&body=Hi%20Lalith%2C%0A%0AI%20visited%20your%20portfolio%20website%20and%20was%20impressed%20by%20your%20work%20in%20AI%2C%20Machine%20Learning%2C%20and%20Full%20Stack%20Development.%20I%20am%20reaching%20out%20to%20discuss%20potential%20collaboration%20%2F%20career%20opportunities.%0A%0AA%20bit%20about%20myself%20%2F%20the%20project%3A%0A-%20Name%3A%20%5BYour%20Name%5D%0A-%20Company%20%2F%20Organization%3A%20%5BYour%20Organization%5D%0A-%20Nature%20of%20Inquiry%3A%20%5Be.g.%2C%20Job%20Opportunity%20%2F%20Freelance%20Project%20%2F%20Tech%20Discussion%5D%0A%0ALet's%20connect%20soon!%0A%0ABest%20regards%2C",
-                },
-              ].map((social, i) => (
-                <a
-                  key={i}
-                  href={social.url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex items-center justify-center w-11 h-11 rounded-full neo-btn text-slate-400 hover:text-indigo-400 hover:border-indigo-500/20 hover:shadow-glow-indigo transition-all"
-                  aria-label={social.label}
-                  title={social.label}
-                >
-                  {social.icon}
-                </a>
-              ))}
-            </div>
+
           </motion.div>
         </div>
 

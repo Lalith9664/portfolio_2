@@ -113,7 +113,7 @@ export default function FloatingParticles() {
       // Density based on window resolution
       const numberOfParticles = Math.min(
         Math.floor((canvas.width * canvas.height) / 12000),
-        120,
+        75,
       );
       particlesArray = [];
       for (let i = 0; i < numberOfParticles; i++) {
@@ -138,9 +138,10 @@ export default function FloatingParticles() {
         for (let j = i + 1; j < particlesArray.length; j++) {
           const dx = particlesArray[i].x - particlesArray[j].x;
           const dy = particlesArray[i].y - particlesArray[j].y;
-          const distance = Math.hypot(dx, dy);
+          const distSq = dx * dx + dy * dy;
 
-          if (distance < 110) {
+          if (distSq < 12100) { // 110 * 110 = 12100
+            const distance = Math.sqrt(distSq);
             const opacityMultiplier = isLightMode ? 0.09 : 0.055;
             ctx.beginPath();
             ctx.strokeStyle = isLightMode

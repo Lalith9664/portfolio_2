@@ -17,7 +17,6 @@ import Projects from './sections/Projects';
 import Education from './sections/Education';
 import Certifications from './sections/Certifications';
 
-import TechStack from './sections/TechStack';
 import Contact from './sections/Contact';
 import Footer from './sections/Footer';
 
@@ -109,7 +108,7 @@ export default function App() {
             <Projects />
             <Education />
             <Certifications />
-            <TechStack />
+
             <Contact />
           </main>
 

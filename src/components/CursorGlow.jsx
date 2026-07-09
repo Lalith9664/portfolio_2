@@ -74,34 +74,24 @@ export default function CursorGlow() {
     window.addEventListener('mouseup', handleMouseUp);
 
     // Dynamic mouse listeners on interactive items
-    const handleMouseEnterInteractive = () => setIsHovered(true);
-    const handleMouseLeaveInteractive = () => setIsHovered(false);
-
-    const updateInteractiveListeners = () => {
-      const targets = document.querySelectorAll('a, button, input, textarea, select, [role="button"]');
-      targets.forEach((target) => {
-        target.addEventListener('mouseenter', handleMouseEnterInteractive);
-        target.addEventListener('mouseleave', handleMouseLeaveInteractive);
-      });
+    const handleMouseOver = (e) => {
+      if (!e.target) return;
+      const target = e.target.closest('a, button, input, textarea, select, [role="button"]');
+      setIsHovered(!!target);
     };
 
-    updateInteractiveListeners();
-
-    const observer = new MutationObserver(updateInteractiveListeners);
-    observer.observe(document.body, { childList: true, subtree: true });
+    window.addEventListener('mousemove', handleMouseMove);
+    document.addEventListener('mouseleave', handleMouseLeave);
+    window.addEventListener('mousedown', handleMouseDown);
+    window.addEventListener('mouseup', handleMouseUp);
+    window.addEventListener('mouseover', handleMouseOver);
 
     return () => {
       window.removeEventListener('mousemove', handleMouseMove);
       document.removeEventListener('mouseleave', handleMouseLeave);
       window.removeEventListener('mousedown', handleMouseDown);
       window.removeEventListener('mouseup', handleMouseUp);
-      
-      const targets = document.querySelectorAll('a, button, input, textarea, select, [role="button"]');
-      targets.forEach((target) => {
-        target.removeEventListener('mouseenter', handleMouseEnterInteractive);
-        target.removeEventListener('mouseleave', handleMouseLeaveInteractive);
-      });
-      observer.disconnect();
+      window.removeEventListener('mouseover', handleMouseOver);
     };
   }, [mouseX, mouseY, isVisible]);
 
